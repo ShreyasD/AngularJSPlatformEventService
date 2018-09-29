@@ -1,0 +1,24 @@
+<project name="" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
+    <taskdef resource="com/salesforce/antlib.xml" uri="antlib:com.salesforce">
+        <classpath>
+            <pathelement location="ant-salesforce.jar" />
+        </classpath>
+    </taskdef>
+
+    <property environment="env"/>
+
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="./ant-contrib-1.0b2.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="retrieve">
+        <sf:retrieve username="${SRC_USERNAME}" password="${SRC_PASSWD}" serverurl="${SRC_URL}"
+                     unpackaged="/src/package.xml" retrieveTarget="/src"/>
+    </target>
+
+    <target name="deploy">
+        <sf:deploy username="${DEST_USERNAME}" password="${DEST_PASSWD}" serverurl="${DEST_URL}" deployRoot="src" rollbackOnError="true" />
+    </target>
+</project>

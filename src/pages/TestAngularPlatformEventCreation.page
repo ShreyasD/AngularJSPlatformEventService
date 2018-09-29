@@ -1,0 +1,41 @@
+<!--
+ - Created by shreyasdhond1 on 2018-09-27.
+ -->
+<apex:page showHeader="false" applyHtmlTag="false" docType="html-5.0">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+
+
+        <apex:includeScript value="/soap/ajax/28.0/connection.js" />
+        <apex:includeScript value="/soap/ajax/28.0/apex.js" />
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular.min.js"/>
+        <apex:includeScript value="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"/>
+        <apex:includeScript value="{!$Resource.angularTestPlatformEventService}"/>
+
+        <script>
+	     var App = angular.module('myApp', ['platformEventServiceModule']);
+
+	     App.controller('myctrl', function ($scope, platformEventService) {
+	        this.$onInit = function() {
+                platformEventService.init('{!GETSESSIONID()}');
+            }
+
+	        $scope.getServiceName = function () {
+				$scope.serviceName = platformEventService.getServiceName();
+			}
+
+			$scope.createEvent = function () {
+			    platformEventService.createEvent();
+            }
+	     });
+	   </script>
+    </head>
+    <body ng-app="myApp" class="container" ng-controller="myctrl">
+    <!--<button  ng-click="getServiceName()">Query</button>-->
+    <button  ng-click="createEvent()">Create Event</button>
+    <div>{{serviceName}}</div>
+    </body>
+</apex:page>
